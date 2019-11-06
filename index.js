@@ -5,10 +5,11 @@ const http_port = 1338
 const bodyParser = require('body-parser')
 
 
+
 app.get('/teams',(req,res) => {
     res.send(teams)
 })
-app.get('/teams/:filter/', (req,res) => {
+app.get('/teams/:filter', (req,res) => {
     let result = teams.filter((team) => {
         let filter = req.params.filter
         console.log(filter)
@@ -19,9 +20,24 @@ app.get('/teams/:filter/', (req,res) => {
 
 app.post('/teams/', bodyParser.json(), (req,res) => {
     const body = req.body || {}
-    console.log({body})
-    res.send(body)
+    let newTeam = teams.push(body)
+    if (!"location" || !"mascot" || !"abbreviation" || !"conference" || !"division") {
+        res.status(400).send('The following attributes are required: location, mascot, abbreviation, conference, division')
+    }
+  console.log({body})
+  res.send(body)
 })
+
+/*app.post('/teams/', bodyParser.json(), (req,res) => {
+    const {location, mascot, abbreviation, conference, division} = req.body
+
+    if (!location || !mascot || !abbreviation || !conference || !division) {
+        res.status(400).send('The following attributes are required: location, mascot, abbreviation, conference, division')
+    }
+    const newTeam = {location, mascot, abbreviation, conference, division}
+    teams.push(newTeam)
+    res.status(201).send(newHero)
+})*/
 app.all('*', (req,res) => {
     console.log({req})
     res.send('Not Found')
@@ -30,3 +46,4 @@ app.all('*', (req,res) => {
     app.listen(http_port, () => {
         console.log(`Listening on ${http_port}`)
     }) 
+module.exports = app
