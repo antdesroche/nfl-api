@@ -28,16 +28,7 @@ app.post('/teams/', bodyParser.json(), (req,res) => {
   res.send(body)
 })
 
-/*app.post('/teams/', bodyParser.json(), (req,res) => {
-    const {location, mascot, abbreviation, conference, division} = req.body
 
-    if (!location || !mascot || !abbreviation || !conference || !division) {
-        res.status(400).send('The following attributes are required: location, mascot, abbreviation, conference, division')
-    }
-    const newTeam = {location, mascot, abbreviation, conference, division}
-    teams.push(newTeam)
-    res.status(201).send(newHero)
-})*/
 app.all('*', (req,res) => {
     console.log({req})
     res.send('Not Found')
