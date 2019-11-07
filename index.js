@@ -20,11 +20,13 @@ app.get('/teams/:filter', (req,res) => {
     res.send(Locations)
     console.log(filter)
 })
-
+app.get('/',(req,res) => {
+    res.send('Welcome to my NFL database, enjoy this masterful code')
+})
 app.post('/teams', bodyParser.json(), (req,res) => {
     const body = req.body
    let newTeams = teams.concat(body)
-    if (!"id" || !"location" || !"mascot" || !"abbreviation" || !"conference" || !"division") {
+    if (!body.id || !body.location || !body.mascot || !body.abbreviation || !body.conference || !body.division) {
         res.status(400).send('The following attributes are required: location, mascot, abbreviation, conference, division')
     }
   console.log({body})
