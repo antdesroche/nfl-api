@@ -10,22 +10,25 @@ app.get('/teams',(req,res) => {
     res.send(teams)
 })
 app.get('/teams/:filter', (req,res) => {
+    let filter = req.params.filter
     let result = teams.filter((team) => {
-        let filter = req.params.filter
-        console.log(filter)
-        return team.id  == filter || team.abbreviation == filter
+        return team.id  == filter || team.abbreviation == filter || team.division == filter || team.conference == filter
     })
-    res.send(result)
+    let Locations = result.map((team) => {
+        return team.location
+    })
+    res.send(Locations)
+    console.log(filter)
 })
 
-app.post('/teams/', bodyParser.json(), (req,res) => {
-    const body = req.body || {}
-    let newTeam = teams.push(body)
-    if (!"location" || !"mascot" || !"abbreviation" || !"conference" || !"division") {
+app.post('/teams', bodyParser.json(), (req,res) => {
+    const body = req.body
+   let newTeams = teams.concat(body)
+    if (!"id" || !"location" || !"mascot" || !"abbreviation" || !"conference" || !"division") {
         res.status(400).send('The following attributes are required: location, mascot, abbreviation, conference, division')
     }
   console.log({body})
-  res.send(body)
+  res.send(newTeams)
 })
 
 
@@ -37,4 +40,4 @@ app.all('*', (req,res) => {
     app.listen(http_port, () => {
         console.log(`Listening on ${http_port}`)
     }) 
-module.exports = app
+module.exports = app 
