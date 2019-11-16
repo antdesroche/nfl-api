@@ -3,13 +3,13 @@ const app = express()
 let teams = require('./teams.json')
 const http_port = 1338
 const bodyParser = require('body-parser')
-const models = (require('./models'))
+const models = (require('./models/teams'))
 
 app.get('./teams',(req,res) => {
     models.Teams.findAll({include: {model: models.Teams}}).then((teams) => {
         res.send(teams)
     })
-})
+}) 
 
 
 app.get('/teams',(req,res) => {

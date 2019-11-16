@@ -1,3 +1,4 @@
+
 module.exports = (connection, Sequelize) => {
     return connection.define('teams', {
         id: {
