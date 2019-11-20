@@ -1,19 +1,21 @@
 const Sequelize = require('sequelize')
 const Express = require('express')
 const allConfigs = require('../config/sequelize')
-const TeamModels = require('.teams')
-const Op = require('sequelize').Op
+const TeamModels = require('./teams')
+
 
 const config = allConfigs['development']
+console.log(config)
 const connection = new Sequelize(config.database, config.username, config.password, 
     {
         host: config.host,
         dialect: config.dialect,
     })
-    const Teams = TeamModels(connection, Sequelize)
+    connection.authenticate()
+    const teams = TeamModels(connection, Sequelize)
 
 
     module.exports = { 
-        Teams,
+        teams,
     } 
-    exports.TeamModel = require('./teams.js')
+    
